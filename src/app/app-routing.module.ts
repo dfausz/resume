@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent},
   { path: 'experience', component: ExperienceComponent },
   { path: 'skills', component: SkillsComponent },
+  { path: '404', component: AboutComponent},
   { path: '',   redirectTo: '/about', pathMatch: 'full' },
 ];
 
