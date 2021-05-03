@@ -1,3 +1,90 @@
-.example-spacer {
-    flex: 1 1 auto;
+$primary: rgb(82, 113, 141);
+$secondary: rgb(85, 146, 154);
+$base: rgb(148, 149, 148);
+
+.app-headshot {
+  border-radius: 50%;
+  height: 225px;
+}
+
+.app-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-name {
+  font-size: 65pt;
+  text-align: center;
+}
+
+.app-menu {
+  display: flex;
+  font-family: Roboto;
+  font-size: 18pt;
+  
+  .menu-item {
+    padding: 0px 12px;
+    cursor: pointer;
   }
+  
+  .menu-item:hover {
+    text-shadow: 0 0 25px $primary;
+  }
+  
+  .menu-item.selected {
+    text-decoration: underline;
+  }
+}
+
+.app-header {
+  background: url("../assets/banner.png") no-repeat left top scroll; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  background-color: $base;
+}
+
+.app-content {
+  flex: 1;
+  padding: 48px 25%;
+}
+
+footer {
+  background: url("../assets/banner.png") no-repeat left bottom scroll; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding: 12px 0px;
+}
+
+@media screen and (max-width: 425px) {
+  .title-name {
+    line-height: 0.85;
+    margin-bottom: 24px;
+  }
+
+  mat-divider {
+    display: none;
+  }
+
+  .app-menu {
+    flex-direction: column;
+    align-self: flex-start;
+
+    .menu-item {
+      margin: 4px 0;
+    }
+  }
+
+  .app-content {
+    padding: 16px;
+  }
+}
