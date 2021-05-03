@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "gh-build": "ng build --prod=true --outputPath=docs --baseHref=/resume/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
