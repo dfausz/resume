@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'skills', component: SkillsComponent },
   { path: '404', component: AboutComponent},
   { path: '',   redirectTo: '/about', pathMatch: 'full' },
+  { path: '*', component: AboutComponent},
 ];
 
 @NgModule({
