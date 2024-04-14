@@ -2,11 +2,6 @@ $primary: rgb(82, 113, 141);
 $secondary: rgb(85, 146, 154);
 $base: rgb(148, 149, 148);
 
-.app-headshot {
-  border-radius: 50%;
-  height: 225px;
-}
-
 .app-container {
   height: 100%;
   display: flex;
@@ -29,7 +24,8 @@ $base: rgb(148, 149, 148);
   }
   
   .menu-item:hover {
-    text-shadow: 0 0 25px $primary;
+    text-decoration: underline;
+    text-decoration-color: lightgray;
   }
   
   .menu-item.selected {

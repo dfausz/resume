@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'experience', component: ExperienceComponent },
   { path: 'skills', component: SkillsComponent },
   { path: '404', component: AboutComponent},
-  { path: '',   redirectTo: '/about', pathMatch: 'full' },
+  { path: '',   redirectTo: '/experience', pathMatch: 'full' },
   { path: '*', component: AboutComponent},
 ];
 

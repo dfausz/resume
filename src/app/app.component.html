@@ -1,14 +1,13 @@
 <div class="app-container">
   <div class="app-header">
-    <img class="app-headshot" src="assets/face-picture.jpg" alt="Avatar">
     <div class="title-name title">Daniel Fausz</div>
     <div class="spacer"></div>
     <div class="app-menu">
-      <div class="menu-item" (click)="navigate('/about')" [ngClass]="{'selected': menuItemSelected == '/about'}">About Me</div>
-      <mat-divider [vertical]="true"></mat-divider>
-      <div class="menu-item" (click)="navigate('/experience')" [ngClass]="{'selected': menuItemSelected == '/experience'}">Work Experience</div>
+      <div class="menu-item" (click)="navigate('/experience')" [ngClass]="{'selected': menuItemSelected == '/experience'}">Experience</div>
       <mat-divider [vertical]="true"></mat-divider>
       <div class="menu-item" (click)="navigate('/skills')" [ngClass]="{'selected': menuItemSelected == '/skills'}">Skills</div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div class="menu-item" (click)="navigate('/about')" [ngClass]="{'selected': menuItemSelected == '/about'}">About Me</div>
     </div>
   </div>
   <div class="app-content">
