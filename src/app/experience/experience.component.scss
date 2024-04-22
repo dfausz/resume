@@ -1,8 +1,57 @@
 .subtitle {
-    margin-top: 4px;
+    margin-bottom: 12px;
     font-size: 16pt;
 }
 
-mat-card {
-    margin-bottom: 24px;
+.company-header {
+    font-size: 28pt;
+}
+
+.product-header {
+    font-size: 18pt;
+    margin-bottom: 12px;
+}
+
+.med-image {
+    max-width: 500px;
+    min-width: 250px;
+    margin-right: 16px;
+}
+
+.big-image{
+    max-width: 650px;
+    min-width: 275px;
+}
+
+.exp-images {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0;
+}
+
+blockquote p {
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 5px;
+}
+
+.quote-icon {
+    position: absolute;
+    font-size: 32pt;
+    margin-left: 18px;
+    color: #888;
+}
+
+mat-divider {
+    margin: 24px 0;
+}
+
+@media screen and (max-width: 540px) { 
+    .exp-images {
+        flex-direction: column;
+
+        img + img {
+            margin-top: 12px;
+        }
+    }
 }
