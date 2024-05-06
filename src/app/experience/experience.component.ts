@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatChipsModule } from "@angular/material/chips";
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-experience',
+  standalone: true,
+  imports: [ 
+    MatChipsModule, 
+    MatDividerModule, 
+    MatIconModule,
+    MatButtonModule
+  ],
   templateUrl: './experience.component.html',
-  styleUrls: ['./experience.component.scss']
+  styleUrl: './experience.component.scss'
 })
-export class ExperienceComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class ExperienceComponent {
 
 }

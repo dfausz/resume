@@ -3,9 +3,13 @@ $secondary: rgb(85, 146, 154);
 $base: rgb(148, 149, 148);
 
 .app-container {
-  height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.app-logo {
+  font-size: 24pt;
+  cursor: pointer;
 }
 
 .title-name {
@@ -16,10 +20,12 @@ $base: rgb(148, 149, 148);
 .app-menu {
   display: flex;
   font-family: Roboto;
-  font-size: 18pt;
+  font-size: 14pt;
+  justify-content: center;
+  align-items: center;
   
   .menu-item {
-    padding: 0px 12px;
+    padding: 0px 8px;
     cursor: pointer;
   }
   
@@ -33,32 +39,91 @@ $base: rgb(148, 149, 148);
   }
 }
 
+.app-icon {
+  height: 28px;
+}
+
 .app-header {
-  background: url("../assets/banner.png") no-repeat left top scroll; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  // background: url("../assets/banner.png") no-repeat left top scroll; 
+  // -webkit-background-size: cover;
+  // -moz-background-size: cover;
+  // -o-background-size: cover;
+  // background-size: cover;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  top: 0;
+  width: 60%;
+  flex: 1;
   align-items: center;
-  padding: 24px;
-  background-color: $base;
+  padding: 12px 20%;
+  background-color: #1D2B34;
+  color: #9DC0BC;
+  box-shadow: none;
+  z-index: 50;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.app-header:not([data-scroll='0']) {
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .5);
+  position: fixed;
 }
 
 .app-content {
   flex: 1;
-  padding: 48px 20%;
+  top: 64px;
+  bottom: 0;
+  padding: 20px 20%;
+  background-color: #1D2B34;
+  color:white;
+  position: absolute;
+  overflow-y: auto;
 }
 
-footer {
-  background: url("../assets/banner.png") no-repeat left bottom scroll; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  padding: 12px 0px;
+.app-hamburger {
+  display: none;
+}
+
+.app-header-content {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+
+@media screen and (max-width: 768px) {
+  .app-menu {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 1s;
+  }
+
+  .mobile-shown {
+    max-height: 1000px;
+  }
+
+  .menu-item {
+    margin-top: 12px;
+  }
+
+  .dash-spacer {
+    display: none;
+  }
+  
+  .app-hamburger {
+    margin: 0 12px;
+    display: block;
+    font-size: 28pt;
+    cursor: pointer;
+  }
+
+  .app-header {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 540px) {
@@ -70,40 +135,21 @@ footer {
   mat-divider {
     display: none;
   }
-
-  .spacer {
-    background-color: white;
-    width: 100%;
-    height: 8px;
-  }
-  
-  .app-menu {
-    padding-top: 12px;
-    flex-direction: column;
-    text-align: center;
-    
-    .menu-item {
-      margin: 8px 0;
-    }
-  }
   
   .app-content {
     padding: 16px;
   }
 
+  .app-logo {
+    margin: 0 12px;
+  }
+
   .app-header {
-    background: url("../assets/mobile_banner.png") no-repeat left bottom scroll; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    padding-top: 24px;
-    padding-bottom: 12px;
-    background-color: $base;
+    padding: 16px 0;
+    width: 100%;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
   }
 }
