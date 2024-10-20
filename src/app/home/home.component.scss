@@ -1,0 +1,48 @@
+.home-component {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a1a;
+
+    .home-title {
+        flex: 1;
+        color: #dadada;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: Roboto;
+        font-size: 4rem;
+        font-weight: 300;
+    
+        span {
+            color: #9DC0BC
+        }
+
+        .dev-type-text {
+            color: #9DC0BC
+        }
+
+        .title-second-line {
+            display: flex;
+
+            .icon {
+                margin: 0 -1.25rem;
+                font-size: 4.5rem;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .scroll-icon {
+        color: #9DC0BC;
+        font-size: 6rem;
+        background-color: #ffffff11;
+        border-radius: 1.25rem;
+        cursor: pointer;
+    }
+}
