@@ -1,51 +1,55 @@
 .app-content {
     background-color: #1a1a1a;
-}
-
-.app-header {
-    position: fixed;
     display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin: 12px;
-    padding: 12px;
-    align-items: center;
-    color: #9DC0BC;
-}
 
-.app-logo {
-    font-size: 24pt;
-    cursor: pointer;
-    margin-bottom: 6px;
-}
-
-.app-menu {
-    display: flex;
-    flex-direction: column;
-    font-family: Roboto;
-    font-size: 20pt;
-    justify-content: center;
-    align-items: center;
-
-    .menu-item {
-        padding: 6px 0px;
+    .app-header {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 12px;
+        align-items: center;
+        color: #9DC0BC;
+    }
+    
+    .app-logo {
+        font-size: 24pt;
         cursor: pointer;
+        margin-bottom: 6px;
+    }
+    
+    .app-menu {
+        display: flex;
+        flex-direction: column;
+        font-family: Roboto;
+        font-size: 20pt;
+        justify-content: center;
+        align-items: center;
+    
+        .menu-item {
+            padding: 6px 0px;
+            cursor: pointer;
+        }
+    
+        .menu-item:hover {
+            color: lightgray;
+        }
+    
+        .menu-item.selected {
+            text-decoration: underline;
+        }
+    }
+    
+    .app-icon {
+        height: 28px;
+    }
+    
+    .app-content-pages {
+        color: #dadada;
+        flex: 8;
+        padding-top: 12px;
     }
 
-    .menu-item:hover {
-        color: lightgray;
+    .flex1 {
+        flex: 1;
     }
-
-    .menu-item.selected {
-        text-decoration: underline;
-    }
-}
-
-.app-icon {
-    height: 28px;
-}
-
-.app-content-pages {
-    color: #dadada;
-    padding: 0 10%;
 }

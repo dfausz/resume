@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 
@@ -11,7 +11,7 @@ import { MatIcon } from '@angular/material/icon';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   devTypes = [
     "full stack",
     "mobile",
@@ -33,6 +33,25 @@ export class HomeComponent {
     }
   }
 
+  ngAfterViewInit() {
+    let timeInterval = 150;
+    let intervalCount = this.devTypes.length * 4;
+
+    const runIteration = () => {
+      this.incrementDevType();
+      intervalCount--;
+      if(intervalCount > 1) {
+        setTimeout(runIteration, timeInterval * Math.ceil(intervalCount/this.devTypes.length)); 
+      }
+      else {
+        this.devTypes.push("software");
+        this.devTypeIndex++;
+      }
+    }
+
+    runIteration();
+  }
+
   navigateToContent() {
     this.router.navigate(['/content']);
   }
@@ -48,7 +67,7 @@ export class HomeComponent {
 
   decrementDevType() {
     if (this.devTypeIndex === 0) {
-      this.devTypeIndex = this.devTypes.length -1;
+      this.devTypeIndex = this.devTypes.length - 1;
     }
     else {
       this.devTypeIndex--;
