@@ -3,12 +3,24 @@
     display: flex;
 
     .app-header {
-        display: flex;
+        position: fixed;
         flex-direction: column;
         flex: 1;
-        padding: 12px;
-        align-items: center;
         color: #9DC0BC;
+
+        .app-header-content {
+            color: #fafafa;
+            background-color: #9DC0BC;
+            width: 100vw;
+            padding: 4px 12px;
+            z-index: 9999;
+        }
+        
+        .app-menu-container {
+            display: flex;
+            width: 100vw;
+            padding: 4px 12px;
+        }
     }
     
     .app-logo {
@@ -24,18 +36,34 @@
         font-size: 20pt;
         justify-content: center;
         align-items: center;
-    
+
         .menu-item {
             padding: 6px 0px;
             cursor: pointer;
+
         }
     
-        .menu-item:hover {
-            color: lightgray;
+        .menu-item.default-text {
+            color: #fafafa;
+
+            &:hover {
+                color: rgb(183, 187, 186);
+            }
         }
+
+        .menu-item.scrolled-text {
+            color: #9DC0BC;
+        }
+    
     
         .menu-item.selected {
             text-decoration: underline;
+        }
+
+        .rectangle {
+            width: 3px; /* Adjust width to your preference */
+            height: 100px; /* Set the height for the rectangle */
+            background-color: #fafafa; /* Default background color */
         }
     }
     
@@ -45,11 +73,7 @@
     
     .app-content-pages {
         color: #dadada;
-        flex: 8;
-        padding-top: 12px;
-    }
-
-    .flex1 {
-        flex: 1;
+        margin: 0 20vh;
+        padding-top: 64px;
     }
 }

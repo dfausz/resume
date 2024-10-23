@@ -3,15 +3,19 @@
         <div class="app-header-content">
             <div class="gugi-regular app-logo" (click)="navigateHome()">&lt;DF /&gt;</div>
         </div>
-        <div class="app-menu"> 
-            <div class="menu-item">Work</div>
-            <div class="menu-item">Projects</div>
-            <div class="menu-item">About</div>
+        <div class="app-menu-container">
+            <div class="app-menu">
+                <div [ngClass]="aboutColorClass" class="menu-item" (click)="scrollToComponent('about-component')">About me</div>
+                <div class="rectangle" [ngStyle]="{ 'background': rectangleAboutToWorkBackground }"></div>
+                <div [ngClass]="experienceColorClass" class="menu-item" (click)="scrollToComponent('experience-component')">Work</div>
+                <div class="rectangle" [ngStyle]="{ 'background': rectangleWorkToProjectsBackground }"></div>
+                <div [ngClass]="projectsColorClass" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div>
+            </div> 
         </div>
     </div>
     <div class="app-content-pages">
-        <app-experience />
-        <app-about />
+        <app-about id="about-component" />
+        <app-experience id="experience-component" />
+        <app-projects id="projects-component" />
     </div>
-    <div class="flex1"></div>
 </div>
