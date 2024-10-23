@@ -27,11 +27,18 @@ export class ContentComponent {
   rectangleAboutToWorkBackground: string = 'linear-gradient(to bottom, #9DC0BC 0%, #fafafa 0%)';
   rectangleWorkToProjectsBackground: string = 'linear-gradient(to bottom, #9DC0BC 0%, #fafafa 0%)';
 
+  @HostListener('window:wheel', ['$event'])
+  onWheel(event: WheelEvent) {
+    if(window.scrollY === 0 && event.deltaY < 0) {
+      this.navigateHome();
+    }
+  }
+
   // Listen to the scroll event on the window
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     const scrollPosition = window.scrollY;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    
     const experience = (document.getElementById("experience-component")?.offsetTop ?? 0) - 64;
     const projects = (document.getElementById("projects-component")?.offsetTop ?? 0) - 64;
 
