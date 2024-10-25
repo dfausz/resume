@@ -1,7 +1,35 @@
 .about-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    font-size: 6rem;
+    padding: 5rem;
+    
+    .about-title {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+        font-weight: 700;
+    }
+
+    .about-sections {
+        display: flex;
+        // height: 100vh;
+        
+        .about-section {
+            flex: 1;
+            margin: 12px;
+            display: flex;
+            justify-content: center;
+            // background-color: lightgray;
+            
+            .section-icon {
+                font-size: 6rem;
+                border: 1px solid #ffffff33;
+                border-radius: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .skill-icon {
+                height: 128px;
+            }
+        }
+    }
 }

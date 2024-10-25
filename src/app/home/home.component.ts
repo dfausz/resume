@@ -48,8 +48,8 @@ export class HomeComponent implements AfterViewInit {
         this.devTypeIndex++;
       }
     }
-
-    runIteration();
+    
+    setTimeout(runIteration, timeInterval * Math.ceil(intervalCount/this.devTypes.length)); 
   }
 
   navigateToContent() {
