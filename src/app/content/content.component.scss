@@ -8,6 +8,7 @@
         flex-direction: column;
         flex: 1;
         color: #9DC0BC;
+        z-index: 2;
 
         .app-header-content {
             color: #fafafa;
@@ -76,5 +77,33 @@
         color: #dadada;
         margin: 0 20vh;
         padding-top: 64px;
+    }
+}
+
+@media screen and (max-width: 1024px) { 
+    .app-content {
+        .app-header {
+            .app-menu-container {
+                display: none;
+            }
+        }
+
+        .app-content-pages {
+            margin: 24px;
+        }
+    }
+}
+
+@media screen and (max-width: 850px) { 
+    .app-content {
+        .app-header {
+            .app-menu-container {
+                display: none;
+            }
+        }
+
+        .app-content-pages {
+            margin: 24px;
+        }
     }
 }
