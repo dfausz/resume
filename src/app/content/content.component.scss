@@ -3,6 +3,7 @@
     display: flex;
 
     .app-header {
+        pointer-events: none;
         position: fixed;
         flex-direction: column;
         flex: 1;
@@ -40,7 +41,7 @@
         .menu-item {
             padding: 6px 0px;
             cursor: pointer;
-
+            pointer-events: initial;
         }
     
         .menu-item.default-text {
