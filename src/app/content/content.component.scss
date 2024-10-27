@@ -1,26 +1,23 @@
 .app-content {
     background-color: #1a1a1a;
-    display: flex;
 
     .app-header {
         pointer-events: none;
         position: fixed;
-        flex-direction: column;
         flex: 1;
         color: #9DC0BC;
         z-index: 2;
-
+        width: 100%;
+        
         .app-header-content {
+            flex: 1;
             color: #fafafa;
             background-color: #9DC0BC;
-            width: 100vw;
             padding: 4px 12px;
-            z-index: 9999;
         }
         
         .app-menu-container {
             display: flex;
-            width: 100vw;
             padding: 4px 12px;
         }
     }
@@ -28,7 +25,7 @@
     .app-logo {
         font-size: 24pt;
         cursor: pointer;
-        margin-bottom: 6px;
+        pointer-events: initial;
     }
     
     .app-menu {
@@ -75,8 +72,7 @@
     
     .app-content-pages {
         color: #dadada;
-        margin: 0 20vh;
-        padding-top: 64px;
+        padding: 64px 20vh;
     }
 }
 
@@ -89,7 +85,7 @@
         }
 
         .app-content-pages {
-            margin: 24px;
+            padding: 64px 24px;
         }
     }
 }
@@ -101,9 +97,9 @@
                 display: none;
             }
         }
-
+        
         .app-content-pages {
-            margin: 24px;
+            padding: 64px 24px;
         }
     }
 }

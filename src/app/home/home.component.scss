@@ -28,12 +28,22 @@
 
         .title-second-line {
             display: flex;
+            
+            .dev-type-carousel {
+                margin: 0 1rem;
 
-            .icon {
-                margin: 0 -1.25rem;
-                font-size: 4.5rem;
-                vertical-align: middle;
-                cursor: pointer;
+                .icon {
+                    margin: 0 -1.25rem;
+                    font-size: 4.5rem;
+                    vertical-align: middle;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        @media screen and (max-width: 900px) { 
+            .title-second-line {
+                flex-direction: column;
             }
         }
     }
@@ -46,3 +56,45 @@
         cursor: pointer;
     }
 }
+
+@media screen and (max-width: 525px) { 
+    .home-component {
+        .home-title {
+            font-size: 3rem;
+
+            .title-second-line {
+                .dev-type-carousel {
+                    .icon {
+                        font-size: 3.75rem;
+                    }
+                }
+            }
+        }
+
+        .scroll-icon {
+            font-size: 4rem;
+        }
+    }
+}
+
+@media screen and (max-width: 375px) { 
+    .home-component {
+        .home-title {
+            font-size: 2.25rem;
+
+            .title-second-line {
+                .dev-type-carousel {
+                    .icon {
+                        font-size: 3.25rem;
+                    }
+                }
+            }
+        }
+
+        .scroll-icon {
+            font-size: 3rem;
+            border-radius: 0.75rem;
+        }
+    }
+}
+

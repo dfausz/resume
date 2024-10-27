@@ -1,10 +1,8 @@
 .about-content {
     padding: 2rem 0rem;
-    
+
     .about-title {
-        font-size: 3rem;
-        margin-bottom: 3rem;
-        font-weight: 700;
+        margin-top: 1rem;
     }
 
     .avatar-intro-section {
@@ -17,17 +15,25 @@
             margin-right: 3rem;
         }
 
-        .intro-text {
+        .intro-content {
+            .intro-text {
+                font-size: 1.25rem;
 
+                span {
+                    color: #9DC0BC;
+                }
+            }
+
+            .social-icons {
+                margin-left: -12px;
+            }
         }
     }
 
     .skills-title {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 3rem;
+        margin-top: 4rem;
     }
-
+    
     .about-sections {
         display: flex;
         
@@ -87,9 +93,12 @@
 
 @media screen and (max-width: 768px) { 
     .about-content {
+        width: 100%;
         
         .about-sections {
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             
             .about-section {
     

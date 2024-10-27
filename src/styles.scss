@@ -26,6 +26,22 @@ body {
     font-style: normal;
 }
 
+.section-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+
+    .section-title-slashes {
+        color: #9DC0BC;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .section-title {
+        font-size: 2.25rem;
+    }
+}
+
 .gugi-regular {
     font-family: "Gugi", sans-serif;
     font-weight: 400;
