@@ -26,6 +26,20 @@ export class HomeComponent implements AfterViewInit {
 
   constructor(private router: Router) { }
 
+  touchstart: any;
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchstart = event.touches[0].clientY;
+  };
+
+  @HostListener('touchmove', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    var te = event.changedTouches[0].clientY;
+    if(this.touchstart > te + 50){
+        this.navigateToContent();
+    }
+  };
+
   @HostListener('window:wheel', ['$event'])
   onWheel(event: WheelEvent) {
     if(event.deltaY > 0) {
@@ -34,8 +48,8 @@ export class HomeComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    let timeInterval = 150;
-    let intervalCount = this.devTypes.length * 4;
+    let timeInterval = 200;
+    let intervalCount = this.devTypes.length * 3;
 
     const runIteration = () => {
       this.incrementDevType();
