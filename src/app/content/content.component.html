@@ -2,16 +2,14 @@
     <div class="app-header">
         <div class="app-header-content">
             <div class="gugi-regular app-logo" (click)="navigateHome()">&lt;DF /&gt;</div>
-        </div>
-        <!-- <div class="app-menu-container">
-            <div class="app-menu">
+            <div class="spacer"></div>
+            <div class="top-menu">
                 <div [ngClass]="aboutColorClass" class="menu-item" (click)="scrollToComponent('about-component')">About me</div>
-                <div class="rectangle" [ngStyle]="{ 'background': rectangleAboutToWorkBackground }"></div>
+                <div [ngClass]="skillsColorClass" class="menu-item" (click)="scrollToComponent('skills-section')">Skills</div>
                 <div [ngClass]="experienceColorClass" class="menu-item" (click)="scrollToComponent('experience-component')">Work</div>
-                <div class="rectangle" [ngStyle]="{ 'background': rectangleWorkToProjectsBackground }"></div>
-                <div [ngClass]="projectsColorClass" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div>
-            </div> 
-        </div> -->
+                <!-- <div [ngClass]="projectsColorClass" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div> -->
+            </div>
+        </div>
     </div>
     <div class="app-content-pages">
         <app-about id="about-component" />

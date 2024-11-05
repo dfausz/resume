@@ -19,6 +19,10 @@
             .intro-text {
                 font-size: 1.25rem;
 
+                h2 {
+                    margin-top: 0;
+                }
+
                 span {
                     color: #9DC0BC;
                 }
@@ -31,7 +35,7 @@
     }
 
     .skills-title {
-        margin-top: 4rem;
+        padding-top: 4rem;
     }
     
     .about-sections {
@@ -76,6 +80,14 @@
 
         .avatar-intro-section {
             flex-direction: column;
+    
+            .intro-content {
+                .intro-text {
+                    h2 {
+                        margin-top: 0.83em;
+                    }
+                }
+            }
         }
 
         .about-sections {

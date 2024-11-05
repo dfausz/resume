@@ -19,13 +19,12 @@ import { ProjectsComponent } from '../projects/projects.component';
 })
 export class ContentComponent {
   aboutColorClass: string = 'scrolled-text';
+  skillsColorClass: string = 'default-text';
   experienceColorClass: string = 'default-text';
   projectsColorClass: string = 'default-text';
+  isSmoothScrolling: boolean = false;
 
   constructor(private router: Router) { }
-
-  rectangleAboutToWorkBackground: string = 'linear-gradient(to bottom, #9DC0BC 0%, #fafafa 0%)';
-  rectangleWorkToProjectsBackground: string = 'linear-gradient(to bottom, #9DC0BC 0%, #fafafa 0%)';
 
   @HostListener('window:wheel', ['$event'])
   onWheel(event: WheelEvent) {
@@ -37,36 +36,42 @@ export class ContentComponent {
   // Listen to the scroll event on the window
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
+    if(!this.isSmoothScrolling){
+      this.updateMenuState()
+    }
+  }
+  
+  updateMenuState(){
     const scrollPosition = window.scrollY;
-    
+    const skills = (document.getElementById("skills-section")?.offsetTop ?? 0) - 64;
     const experience = (document.getElementById("experience-component")?.offsetTop ?? 0) - 64;
-    const projects = (document.getElementById("projects-component")?.offsetTop ?? 0) - 64;
+    // const projects = (document.getElementById("projects-component")?.offsetTop ?? 0) - 64;
 
-    // Calculate the percentage of the page scrolled
-    const scrollToExperiencePercent = (scrollPosition / experience) * 100;
-    const scrollToProjectsPercent = ((scrollPosition - experience) / (projects - experience)) * 100;
-
-    // Update the background gradient based on scroll percent
-    this.rectangleAboutToWorkBackground = `linear-gradient(to bottom, #9DC0BC ${scrollToExperiencePercent}%, #fafafa ${scrollToExperiencePercent}%)`;
-    this.rectangleWorkToProjectsBackground = `linear-gradient(to bottom, #9DC0BC ${scrollToProjectsPercent}%, #fafafa ${scrollToProjectsPercent}%)`;
-
-    if(scrollPosition < experience) {
-      this.aboutColorClass = 'scrolled-text'
+    if(scrollPosition < skills) {
+      this.aboutColorClass = 'scrolled-text';
+      this.skillsColorClass = 'default-text';
       this.experienceColorClass = 'default-text';
       this.projectsColorClass = 'default-text';
     }
-    else if(scrollPosition >= experience && scrollPosition < projects){
-      // this.aboutColorClass = 'default-text';
+    else if(scrollPosition >= skills && scrollPosition < experience){
+      this.aboutColorClass = 'default-text';
+      this.skillsColorClass = 'scrolled-text';
+      this.experienceColorClass = 'default-text';
+      this.projectsColorClass = 'default-text';
+    }
+    else if(scrollPosition >= experience) { // && scrollPosition < projects){
+      this.aboutColorClass = 'default-text';
+      this.skillsColorClass = 'default-text';
       this.experienceColorClass = 'scrolled-text';
       this.projectsColorClass = 'default-text';
     }
-    else if(scrollPosition >= projects){
-      // this.aboutColorClass = 'default-text';
-      // this.experienceColorClass = 'default-text';
-      this.projectsColorClass = 'scrolled-text';
-    }
+    // else if(scrollPosition >= projects){
+    //   this.aboutColorClass = 'default-text';
+    //   this.skillsColorClass = 'default-text';
+    //   this.experienceColorClass = 'default-text';
+    //   this.projectsColorClass = 'scrolled-text';
+    // }
   }
-
 
   navigateHome(){
     this.smoothScrollTo(0).then(() => {
@@ -75,12 +80,16 @@ export class ContentComponent {
   }
 
   scrollToComponent(elementId: string) {
+    this.isSmoothScrolling = true;
     const element = document.getElementById(elementId);
     if(element !== null){
-      window.scrollTo({
-        top: element.offsetTop - 64,
-        behavior: "smooth"
-      })
+      this.smoothScrollTo(element.offsetTop - 64).then(() => {
+        this.isSmoothScrolling = false;
+        this.updateMenuState();
+      });
+    }
+    else {
+      this.isSmoothScrolling = false;
     }
   }
 

@@ -10,22 +10,55 @@
         width: 100%;
         
         .app-header-content {
+            display: flex;
             flex: 1;
             color: #fafafa;
             background-color: #9DC0BC;
             padding: 4px 12px;
+
+            .app-logo {
+                user-select: none;
+                font-size: 24pt;
+                cursor: pointer;
+                pointer-events: initial;
+            }
+
+            .menu-item {
+                cursor: pointer;
+                pointer-events: initial;
+                padding: 0.3em 1em;
+                border-radius: 0.3em;
+
+                &.default-text {
+                    color: #fafafa;
+        
+                    &:hover {
+                        background-color: #fafafa55;
+                    }
+                }
+        
+                &.scrolled-text {
+                    color: #9DC0BC;
+                    background-color: #fafafa;
+                }
+            }
+
+            .spacer {
+                flex: 1;
+            }
+
+            .top-menu {
+                display: flex;
+                gap: 0.3em;
+                align-items: center;
+                font-size: 1.5rem;
+            }
         }
         
         .app-menu-container {
             display: flex;
             padding: 4px 12px;
         }
-    }
-    
-    .app-logo {
-        font-size: 24pt;
-        cursor: pointer;
-        pointer-events: initial;
     }
     
     .app-menu {
@@ -35,24 +68,11 @@
         font-size: 20pt;
         justify-content: center;
         align-items: center;
+        pointer-events: initial;
 
-        .menu-item {
-            padding: 6px 0px;
-            cursor: pointer;
-            pointer-events: initial;
-        }
+        
     
-        .menu-item.default-text {
-            color: #fafafa;
-
-            &:hover {
-                color: rgb(183, 187, 186);
-            }
-        }
-
-        .menu-item.scrolled-text {
-            color: #9DC0BC;
-        }
+        
     
     
         .menu-item.selected {
@@ -79,8 +99,10 @@
 @media screen and (max-width: 1024px) { 
     .app-content {
         .app-header {
-            .app-menu-container {
-                display: none;
+            .app-header-content {
+                .top-menu {
+                    font-size: 1.25rem;
+                }
             }
         }
 
@@ -96,10 +118,29 @@
             .app-menu-container {
                 display: none;
             }
+
+            .app-header-content {
+                .top-menu {
+                    gap: 1rem;
+                }
+            }
         }
         
         .app-content-pages {
             padding: 64px 24px;
+        }
+    }
+}
+
+@media screen and (max-width: 425px) { 
+    .app-content {
+        .app-header {
+
+            .app-header-content {
+                .top-menu {
+                    display: none;
+                }
+            }
         }
     }
 }
