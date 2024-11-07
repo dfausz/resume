@@ -14,7 +14,7 @@
             flex: 1;
             color: #fafafa;
             background-color: #9DC0BC;
-            padding: 4px 12px;
+            padding: 12px;
 
             .app-logo {
                 user-select: none;
@@ -132,7 +132,7 @@
     }
 }
 
-@media screen and (max-width: 425px) { 
+@media screen and (max-width: 500px) { 
     .app-content {
         .app-header {
 

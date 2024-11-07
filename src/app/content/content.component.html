@@ -4,8 +4,8 @@
             <div class="gugi-regular app-logo" (click)="navigateHome()">&lt;DF /&gt;</div>
             <div class="spacer"></div>
             <div class="top-menu">
-                <div [ngClass]="aboutColorClass" class="menu-item" (click)="scrollToComponent('about-component')">About me</div>
-                <div [ngClass]="skillsColorClass" class="menu-item" (click)="scrollToComponent('skills-section')">Skills</div>
+                <div [ngClass]="aboutColorClass" class="menu-item" (click)="scrollToPosition(0)">About me</div>
+                <div [ngClass]="skillsColorClass" class="menu-item" (click)="scrollToComponent('skills-component')">Skills</div>
                 <div [ngClass]="experienceColorClass" class="menu-item" (click)="scrollToComponent('experience-component')">Work</div>
                 <!-- <div [ngClass]="projectsColorClass" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div> -->
             </div>
@@ -13,6 +13,7 @@
     </div>
     <div class="app-content-pages">
         <app-about id="about-component" />
+        <app-skills id="skills-component" />
         <app-experience id="experience-component" />
         <!-- <app-projects id="projects-component" /> -->
     </div>

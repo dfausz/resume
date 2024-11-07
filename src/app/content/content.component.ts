@@ -1,9 +1,10 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from '../experience/experience.component';
 import { AboutComponent } from '../about/about.component';
 import { Router } from '@angular/router';
 import { ProjectsComponent } from '../projects/projects.component';
+import { SkillsComponent } from '../skills/skills.component';
 
 @Component({
   selector: 'app-content',
@@ -12,7 +13,8 @@ import { ProjectsComponent } from '../projects/projects.component';
     CommonModule,
     ExperienceComponent,
     AboutComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    SkillsComponent
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss'
@@ -40,11 +42,17 @@ export class ContentComponent {
       this.updateMenuState()
     }
   }
+
+  remToPx(rem: number) {
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize); 
+    return rem * rootFontSize; 
+  }
   
+  // TODO: Refactor this mess
   updateMenuState(){
     const scrollPosition = window.scrollY;
-    const skills = (document.getElementById("skills-section")?.offsetTop ?? 0) - 64;
-    const experience = (document.getElementById("experience-component")?.offsetTop ?? 0) - 64;
+    const skills = (document.getElementById("skills-component")?.offsetTop ?? 0) - this.remToPx(4);
+    const experience = (document.getElementById("experience-component")?.offsetTop ?? 0) - this.remToPx(4);
     // const projects = (document.getElementById("projects-component")?.offsetTop ?? 0) - 64;
 
     if(scrollPosition < skills) {
@@ -80,17 +88,18 @@ export class ContentComponent {
   }
 
   scrollToComponent(elementId: string) {
-    this.isSmoothScrolling = true;
     const element = document.getElementById(elementId);
     if(element !== null){
-      this.smoothScrollTo(element.offsetTop - 64).then(() => {
-        this.isSmoothScrolling = false;
-        this.updateMenuState();
-      });
+      this.scrollToPosition(element.offsetTop - this.remToPx(3.5));
     }
-    else {
+  }
+
+  scrollToPosition(top: number) {
+    this.isSmoothScrolling = true;
+    this.smoothScrollTo(top).then(() => {
       this.isSmoothScrolling = false;
-    }
+      this.updateMenuState();
+    });
   }
 
   smoothScrollTo(top: number) {
