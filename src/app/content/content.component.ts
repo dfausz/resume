@@ -1,10 +1,11 @@
-import { Component, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from '../experience/experience.component';
 import { AboutComponent } from '../about/about.component';
 import { Router } from '@angular/router';
 import { ProjectsComponent } from '../projects/projects.component';
 import { SkillsComponent } from '../skills/skills.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-content',
@@ -17,16 +18,37 @@ import { SkillsComponent } from '../skills/skills.component';
     SkillsComponent
   ],
   templateUrl: './content.component.html',
-  styleUrl: './content.component.scss'
+  styleUrl: './content.component.scss',
+  animations: [
+    trigger('slideInOut', [
+      state('in', style({ transform: 'translateY(0)' })),
+      state('out', style({ transform: 'translateY(-14rem)' })),
+      transition('in <=> out', animate('500ms ease-in-out'))
+    ])
+  ]
 })
 export class ContentComponent {
-  aboutColorClass: string = 'scrolled-text';
-  skillsColorClass: string = 'default-text';
-  experienceColorClass: string = 'default-text';
-  projectsColorClass: string = 'default-text';
   isSmoothScrolling: boolean = false;
+  currentMenuItem: string = "";
+  isMobileMenuVisible = false;
+
+  menuItems: NodeListOf<HTMLElement> | null = null;
+  activeBg: HTMLElement | null = null;
 
   constructor(private router: Router) { }
+
+  @HostListener('window:load')
+  onLoad() {
+    this.menuItems = document.querySelectorAll('.menu-item');
+    this.activeBg = document.querySelector('.active-bg');
+  
+    const activeItem = document.querySelector('.menu-item.active')! as HTMLElement;
+    if (activeItem) this.updateActiveBg(activeItem);
+  
+    this.menuItems.forEach(item => {
+      item.addEventListener('click', () => this.selectMenuItem(item));
+    });
+  }
 
   @HostListener('window:wheel', ['$event'])
   onWheel(event: WheelEvent) {
@@ -43,6 +65,32 @@ export class ContentComponent {
     }
   }
 
+  closeMobileMenu() {
+    this.isMobileMenuVisible = false;
+  }
+
+  toggleMobileMenuVisibility() {
+    this.isMobileMenuVisible = !this.isMobileMenuVisible;
+  }
+
+  selectMenuItem(item: HTMLElement) {
+    this.menuItems?.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    this.updateActiveBg(item);
+  }
+
+  updateActiveBg(element: HTMLElement) {
+    const itemRect = element.getBoundingClientRect();
+    const menuRect = element.parentElement!.getBoundingClientRect();
+    
+    // Update background width, height, and position
+    if (this.activeBg !== null){
+      this.activeBg.style.width = `${itemRect.width}px`;
+      this.activeBg.style.height = `${itemRect.height}px`;
+      this.activeBg.style.left = `${itemRect.left - menuRect.left}px`;
+    }
+  }
+
   remToPx(rem: number) {
     const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize); 
     return rem * rootFontSize; 
@@ -51,34 +99,29 @@ export class ContentComponent {
   // TODO: Refactor this mess
   updateMenuState(){
     const scrollPosition = window.scrollY;
-    const skills = (document.getElementById("skills-component")?.offsetTop ?? 0) - this.remToPx(4);
-    const experience = (document.getElementById("experience-component")?.offsetTop ?? 0) - this.remToPx(4);
-    // const projects = (document.getElementById("projects-component")?.offsetTop ?? 0) - 64;
+    const skills = document.getElementById("skills-component")!.offsetTop - this.remToPx(4);
+    const experience = document.getElementById("experience-component")!.offsetTop - this.remToPx(4);
+    // const projects = document.getElementById("projects-component")!.offsetTop - this.remToPx(4);
+
+    let newMenuItem = "";
 
     if(scrollPosition < skills) {
-      this.aboutColorClass = 'scrolled-text';
-      this.skillsColorClass = 'default-text';
-      this.experienceColorClass = 'default-text';
-      this.projectsColorClass = 'default-text';
+      newMenuItem = "about-menu-item";
     }
     else if(scrollPosition >= skills && scrollPosition < experience){
-      this.aboutColorClass = 'default-text';
-      this.skillsColorClass = 'scrolled-text';
-      this.experienceColorClass = 'default-text';
-      this.projectsColorClass = 'default-text';
+      newMenuItem = "skills-menu-item";
     }
     else if(scrollPosition >= experience) { // && scrollPosition < projects){
-      this.aboutColorClass = 'default-text';
-      this.skillsColorClass = 'default-text';
-      this.experienceColorClass = 'scrolled-text';
-      this.projectsColorClass = 'default-text';
+      newMenuItem = "experience-menu-item";
     }
     // else if(scrollPosition >= projects){
-    //   this.aboutColorClass = 'default-text';
-    //   this.skillsColorClass = 'default-text';
-    //   this.experienceColorClass = 'default-text';
-    //   this.projectsColorClass = 'scrolled-text';
-    // }
+      //   newMenuItem = "projects-menu-item";
+      // }
+      
+    if(this.currentMenuItem !== newMenuItem){
+      this.selectMenuItem(document.getElementById(newMenuItem)!);
+      this.currentMenuItem = newMenuItem;
+    }
   }
 
   navigateHome(){
@@ -95,6 +138,7 @@ export class ContentComponent {
   }
 
   scrollToPosition(top: number) {
+    this.isMobileMenuVisible = false;
     this.isSmoothScrolling = true;
     this.smoothScrollTo(top).then(() => {
       this.isSmoothScrolling = false;

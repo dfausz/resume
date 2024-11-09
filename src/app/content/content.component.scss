@@ -1,12 +1,12 @@
 .app-content {
     background-color: #1a1a1a;
+    position: relative;
 
     .app-header {
-        pointer-events: none;
         position: fixed;
         flex: 1;
         color: #9DC0BC;
-        z-index: 2;
+        z-index: 3;
         width: 100%;
         
         .app-header-content {
@@ -14,80 +14,86 @@
             flex: 1;
             color: #fafafa;
             background-color: #9DC0BC;
-            padding: 12px;
+            padding: 0.8rem;
+            box-shadow: 0 0.1px 8px rgb(94, 114, 112);
 
             .app-logo {
                 user-select: none;
                 font-size: 24pt;
                 cursor: pointer;
-                pointer-events: initial;
-            }
-
-            .menu-item {
-                cursor: pointer;
-                pointer-events: initial;
-                padding: 0.3em 1em;
-                border-radius: 0.3em;
-
-                &.default-text {
-                    color: #fafafa;
-        
-                    &:hover {
-                        background-color: #fafafa55;
-                    }
-                }
-        
-                &.scrolled-text {
-                    color: #9DC0BC;
-                    background-color: #fafafa;
-                }
             }
 
             .spacer {
                 flex: 1;
             }
-
+            
             .top-menu {
+                position: relative;
                 display: flex;
                 gap: 0.3em;
                 align-items: center;
                 font-size: 1.5rem;
+
+                .menu-item {
+                    position: relative;
+                    cursor: pointer;
+                    pointer-events: initial;
+                    padding: 0.3em 1em;
+                    border-radius: 0.3em;
+                    z-index: 1;
+                    transition: color 0.3s ease;
+                    color: #fafafa;
+                    
+                    &:hover {
+                        background-color: #fafafa55;
+                    }
+            
+                    &.active {
+                        color: #9DC0BC;
+                    }
+                }
+
+                .active-bg {
+                    position: absolute;
+                    height: 70%;
+                    background-color: #fafafa;
+                    transition: all 0.3s ease;
+                    z-index: 0;
+                    border-radius: 5px;
+                }
+            }
+
+            .mobile-menu-icon {
+                display: none;
+
+                i {
+                    font-size: 2rem;
+                    margin-right: 1rem;
+                }
             }
         }
-        
-        .app-menu-container {
-            display: flex;
-            padding: 4px 12px;
-        }
+
     }
-    
-    .app-menu {
-        display: flex;
+
+    .mobile-menu {
+        display: none;
+        position: fixed;
+        width: 100vw;
+        background-color: #9DC0BC;
+        padding-bottom: 2rem;
+        gap: 1.25rem;
         flex-direction: column;
-        font-family: Roboto;
-        font-size: 20pt;
-        justify-content: center;
+        padding-top: 4rem;
+        margin-top: 1.75rem;
+        z-index: 2;
         align-items: center;
-        pointer-events: initial;
-
         
-    
-        
-    
-    
-        .menu-item.selected {
-            text-decoration: underline;
+        .menu-item {
+            color: #fafafa;
+            font-size: 2rem;
+            width: 100%;
+            text-align: center;
         }
-
-        .rectangle {
-            width: 3px; /* Adjust width to your preference */
-            height: 100px; /* Set the height for the rectangle */
-            background-color: #fafafa; /* Default background color */
-        }
-    }
-    
-    .app-icon {
-        height: 28px;
     }
     
     .app-content-pages {
@@ -132,15 +138,22 @@
     }
 }
 
-@media screen and (max-width: 500px) { 
+@media screen and (max-width: 768px), screen and (max-width: 1024px) and (orientation: landscape) { 
     .app-content {
         .app-header {
-
             .app-header-content {
                 .top-menu {
                     display: none;
                 }
+
+                .mobile-menu-icon {
+                    display: block;
+                }
             }
+
+        }
+        .mobile-menu {
+            display: flex;
         }
     }
 }
