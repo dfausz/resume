@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <nav class="mobile-menu" [@slideInOut]="isMobileMenuVisible ? 'in' : 'out'">
+    <nav id="mobile-menu" class="mobile-menu" [@slideInOut]="isMobileMenuVisible ? 'in' : 'out'">
         <!-- TODO: Make and active styling and make it change on scroll -->
         <div class="menu-item active" (click)="scrollToPosition(0)">About me</div>
         <div class="menu-item" (click)="scrollToComponent('skills-component')">Skills</div>

@@ -26,7 +26,7 @@ export class HomeComponent implements AfterViewInit {
 
   constructor(private router: Router) { }
 
-  touchstart: any;
+  touchstart: number = 0;
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
     this.touchstart = event.touches[0].clientY;

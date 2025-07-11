@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from '../experience/experience.component';
 import { AboutComponent } from '../about/about.component';
@@ -21,33 +21,28 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrl: './content.component.scss',
   animations: [
     trigger('slideInOut', [
-      state('in', style({ transform: 'translateY(0)' })),
-      state('out', style({ transform: 'translateY(-14rem)' })),
+      state('in', style({ transform: 'translateY(14rem)' })),
+      state('out', style({ transform: 'translateY(0)' })),
       transition('in <=> out', animate('500ms ease-in-out'))
     ])
   ]
 })
-export class ContentComponent {
+export class ContentComponent implements OnInit {
   isSmoothScrolling: boolean = false;
   currentMenuItem: string = "";
   isMobileMenuVisible = false;
-
+  
   menuItems: NodeListOf<HTMLElement> | null = null;
   activeBg: HTMLElement | null = null;
-
+  
   constructor(private router: Router) { }
-
-  @HostListener('window:load')
-  onLoad() {
+  
+  ngOnInit(): void {
     this.menuItems = document.querySelectorAll('.menu-item');
     this.activeBg = document.querySelector('.active-bg');
-  
+    
     const activeItem = document.querySelector('.menu-item.active')! as HTMLElement;
     if (activeItem) this.updateActiveBg(activeItem);
-  
-    this.menuItems.forEach(item => {
-      item.addEventListener('click', () => this.selectMenuItem(item));
-    });
   }
 
   @HostListener('window:wheel', ['$event'])
@@ -64,6 +59,20 @@ export class ContentComponent {
       this.updateMenuState()
     }
   }
+
+  touchstart: number = 0;
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchstart = event.touches[0].clientY;
+  };
+
+  @HostListener('touchmove', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    var te = event.changedTouches[0].clientY;
+    if(window.scrollY === 0 && this.touchstart < te - 50){
+        this.navigateHome();
+    }
+  };
 
   closeMobileMenu() {
     this.isMobileMenuVisible = false;
