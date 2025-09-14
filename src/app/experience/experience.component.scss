@@ -57,10 +57,17 @@
             // border-radius: 12px;
             padding: 24px 24px 12px 24px;
 
-            .med-image {
+            .wide-image {
                 width: 40vw;
                 margin-bottom: 12px;
             }
+
+            .tall-image {
+                max-width: 100%;
+                min-width: 0;
+                height: auto;
+            }
+ 
         }
     }
 }
@@ -90,7 +97,7 @@
             .exp-images {
                 margin-top: 1.5rem;
     
-                .med-image {
+                .wide-image {
                     width: 100%;
                 }
             }
