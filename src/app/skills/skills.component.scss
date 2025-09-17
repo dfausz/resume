@@ -19,7 +19,7 @@
         .blob-background {
             position: absolute;
             width: 35vw;
-            min-width: 28rem;
+            min-width: 43vw;
             pointer-events: none;
         }
         
@@ -41,6 +41,7 @@
             .blob-background {
                 position: absolute;
                 pointer-events: none;
+                min-width: 30rem;
             }
         }
     }
@@ -63,6 +64,7 @@
             .blob-background {
                 position: absolute;
                 height: 528px;
+                padding-top: 10vh;
                 pointer-events: none;
             }
         }
