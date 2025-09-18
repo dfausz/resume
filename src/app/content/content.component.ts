@@ -109,23 +109,23 @@ export class ContentComponent implements OnInit {
   updateMenuState(){
     const scrollPosition = window.scrollY;
     const skills = document.getElementById("skills-component")!.offsetTop - this.remToPx(4);
+    const projects = document.getElementById("projects-component")!.offsetTop - this.remToPx(4);
     const experience = document.getElementById("experience-component")!.offsetTop - this.remToPx(4);
-    // const projects = document.getElementById("projects-component")!.offsetTop - this.remToPx(4);
 
     let newMenuItem = "";
 
     if(scrollPosition < skills) {
       newMenuItem = "about-menu-item";
     }
-    else if(scrollPosition >= skills && scrollPosition < experience){
+    else if(scrollPosition >= skills && scrollPosition < projects){
       newMenuItem = "skills-menu-item";
     }
-    else if(scrollPosition >= experience) { // && scrollPosition < projects){
+    else if(scrollPosition >= projects && scrollPosition < experience){
+        newMenuItem = "projects-menu-item";
+    }
+    else if(scrollPosition >= experience) {
       newMenuItem = "experience-menu-item";
     }
-    // else if(scrollPosition >= projects){
-      //   newMenuItem = "projects-menu-item";
-      // }
       
     if(this.currentMenuItem !== newMenuItem){
       this.selectMenuItem(document.getElementById(newMenuItem)!);

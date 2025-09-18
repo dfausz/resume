@@ -6,8 +6,8 @@
             <nav class="top-menu">
                 <div id="about-menu-item" class="menu-item active" (click)="scrollToPosition(0)">About me</div>
                 <div id="skills-menu-item" class="menu-item" (click)="scrollToComponent('skills-component')">Skills</div>
+                <div id="projects-menu-item" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div>
                 <div id="experience-menu-item" class="menu-item" (click)="scrollToComponent('experience-component')">Work</div>
-                <!-- <div id="projects-menu-item" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div> -->
                 <div class="active-bg"></div>
             </nav>
             <div class="mobile-menu-icon" (click)="toggleMobileMenuVisibility()">
@@ -19,13 +19,13 @@
         <!-- TODO: Make and active styling and make it change on scroll -->
         <div class="menu-item active" (click)="scrollToPosition(0)">About me</div>
         <div class="menu-item" (click)="scrollToComponent('skills-component')">Skills</div>
+        <div class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div>
         <div class="menu-item" (click)="scrollToComponent('experience-component')">Work</div>
-        <!-- <div id="projects-menu-item" class="menu-item" (click)="scrollToComponent('projects-component')">Projects</div> -->
     </nav>
     <div class="app-content-pages" (click)="closeMobileMenu()">
         <app-about id="about-component" />
         <app-skills id="skills-component" />
+        <app-projects id="projects-component" />
         <app-experience id="experience-component" />
-        <!-- <app-projects id="projects-component" /> -->
     </div>
 </div>
