@@ -5,6 +5,7 @@ import { ExperienceComponent } from './experience/experience.component';
 import { SocialsComponent } from './socials/socials.component';
 import { ContentComponent } from './content/content.component';
 import { trigger, transition, style, animate, query, group } from '@angular/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { trigger, transition, style, animate, query, group } from '@angular/anim
     RouterOutlet,
     ExperienceComponent,
     SocialsComponent,
-    ContentComponent
+    ContentComponent,
+    ScrollingModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -22,7 +24,7 @@ import { trigger, transition, style, animate, query, group } from '@angular/anim
     trigger('routeAnimations', [
       transition('* <=> *', [
         // Start with both old and new components hidden
-        query(':enter, :leave', style({ position: 'absolute', width: '100%' }), {
+        query(':enter, :leave', style({ position: 'absolute', inset: 0, overflow: 'hidden' }), {
           optional: true,
         }),
 

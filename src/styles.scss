@@ -7,16 +7,29 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "blobs.scss";
 
+/* SCSS RGB */
+$eerie-black: rgba(26, 26, 26, 1);
+$ash-gray: rgba(157, 192, 188, 1);
+$coral: rgba(255, 126, 95, 1);
+$sandy-brown: rgba(254, 180, 123, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-right: linear-gradient(90deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-bottom: linear-gradient(180deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-left: linear-gradient(270deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-top-right: linear-gradient(45deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-bottom-right: linear-gradient(135deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-top-left: linear-gradient(225deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-bottom-left: linear-gradient(315deg, #1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+$gradient-radial: radial-gradient(#1a1a1aff, #9dc0bcff, #ff7e5fff, #feb47bff);
+
 html, body { height: 100%; }
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     background-color: #1a1a1a;
-}
-
- /* Style the scrollbar */
- ::-webkit-scrollbar {
-    width: 0px;
+    scrollbar-color: #9DC0BC #1a1a1a;
 }
 
 .title {
@@ -29,7 +42,7 @@ body {
 
 .section-title {
     font-size: 3rem;
-    margin: 4rem 0;
+    padding: 4rem 0;
     font-weight: 700;
 
     .section-title-slashes {

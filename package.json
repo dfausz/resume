@@ -6,7 +6,8 @@
     "start": "ng serve",
     "host": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
-    "firebase-deploy": "ng build && firebase deploy --only hosting",
+    "fb-test-deploy": "ng build && firebase deploy --only hosting:fausz-test",
+    "fb-prod-deploy": "ng build && firebase deploy --only hosting:fausz",
     "gh-build": "ng build --prod=true --outputPath=docs --baseHref=/ && copy docs\\index.html docs\\404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

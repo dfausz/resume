@@ -1,12 +1,16 @@
 .about-content {
+    // padding: 0 20vh;
+    // background-size: cover;
+    // background-image: url('/assets/background.svg');
 
     .avatar-intro-section {
         display: flex;
-        padding: 0 10%;
+        padding: 2rem 8%;
 
         .avatar-icon {
             height: 20rem;
             margin-right: 3rem;
+            margin-top: 0.5rem;
         }
 
         .intro-content {
@@ -20,16 +24,35 @@
                 span {
                     color: #9DC0BC;
                 }
+
+                .highlight-words {
+                    color: #dadada;
+                }
             }
 
+            .resume-buttons {
+                display: flex;
+                gap: 0.4rem;
+                align-items: center;
+            
+                h2 {
+                    margin-right: 1rem;
+
+                    span {
+                        color: #9DC0BC;
+                    }
+                }
+            }
+            
             .social-icons {
-                margin-left: -12px;
+                display: flex;
+                gap: 0.4rem;
             }
         }
     }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
     .about-content {
         padding: 0;
 
@@ -50,5 +73,22 @@
 @media screen and (max-width: 768px) { 
     .about-content {
         width: 100%;
+
+        .avatar-intro-section {
+            padding: 0 5%;
+        }
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .about-content {
+
+        .avatar-intro-section {
+            padding: 0;
+            
+            .avatar-icon {
+                margin: 0;
+            }
+        }
     }
 }

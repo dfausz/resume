@@ -1,7 +1,9 @@
 .exp-content {
+    // padding: 0 20vh;
     
     .exp-group-container {
         display: flex;
+        align-items: flex-start;
         margin-bottom: 3rem;
 
         &:nth-child(odd) {

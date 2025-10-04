@@ -1,4 +1,5 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnInit, Optional, SkipSelf } from '@angular/core';
+import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from '../experience/experience.component';
 import { AboutComponent } from '../about/about.component';
@@ -6,6 +7,8 @@ import { Router } from '@angular/router';
 import { ProjectsComponent } from '../projects/projects.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { filter, map, startWith, take } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-content',
@@ -21,7 +24,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrl: './content.component.scss',
   animations: [
     trigger('slideInOut', [
-      state('in', style({ transform: 'translateY(14rem)' })),
+      state('in', style({ transform: 'translateY(18rem)' })),
       state('out', style({ transform: 'translateY(0)' })),
       transition('in <=> out', animate('500ms ease-in-out'))
     ])
@@ -35,7 +38,9 @@ export class ContentComponent implements OnInit {
   menuItems: NodeListOf<HTMLElement> | null = null;
   activeBg: HTMLElement | null = null;
   
-  constructor(private router: Router) { }
+  constructor(private router: Router, 
+    @Optional() @SkipSelf() private scrollable: CdkScrollable,
+    private scrollDispatcher: ScrollDispatcher) { }
   
   ngOnInit(): void {
     this.menuItems = document.querySelectorAll('.menu-item');
@@ -43,21 +48,18 @@ export class ContentComponent implements OnInit {
     
     const activeItem = document.querySelector('.menu-item.active')! as HTMLElement;
     if (activeItem) this.updateActiveBg(activeItem);
-  }
 
-  @HostListener('window:wheel', ['$event'])
-  onWheel(event: WheelEvent) {
-    if(window.scrollY === 0 && event.deltaY < 0) {
-      this.navigateHome();
-    }
-  }
-
-  // Listen to the scroll event on the window
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    if(!this.isSmoothScrolling){
-      this.updateMenuState()
-    }
+    this.scrollDispatcher
+      .scrolled()
+      .pipe(
+        filter(src => src === this.scrollable),
+        map(() => this.scrollable!.getElementRef().nativeElement.scrollTop)
+      )
+      .subscribe(() => {
+        if(!this.isSmoothScrolling){
+          this.updateMenuState()
+        }
+      });
   }
 
   touchstart: number = 0;
@@ -66,11 +68,13 @@ export class ContentComponent implements OnInit {
     this.touchstart = event.touches[0].clientY;
   };
 
-  @HostListener('touchmove', ['$event'])
+  goHomeLock: boolean = false;
+  @HostListener('touchend', ['$event'])
   onTouchEnd(event: TouchEvent) {
+    const el = this.scrollable.getElementRef().nativeElement;
     var te = event.changedTouches[0].clientY;
-    if(window.scrollY === 0 && this.touchstart < te - 50){
-        this.navigateHome();
+    if(el.scrollTop === 0 && this.touchstart < te - 50){
+      this.navigateHome();
     }
   };
 
@@ -107,10 +111,13 @@ export class ContentComponent implements OnInit {
   
   // TODO: Refactor this mess
   updateMenuState(){
-    const scrollPosition = window.scrollY;
-    const skills = document.getElementById("skills-component")!.offsetTop - this.remToPx(4);
-    const projects = document.getElementById("projects-component")!.offsetTop - this.remToPx(4);
-    const experience = document.getElementById("experience-component")!.offsetTop - this.remToPx(4);
+    const el = this.scrollable?.getElementRef().nativeElement;
+    const current = el ? el.scrollTop : 0;
+    const scrollPosition = current;
+    const menuStateOffsetY = this.remToPx(15);
+    const skills = document.getElementById("skills-component")!.offsetTop - menuStateOffsetY;
+    const projects = document.getElementById("projects-component")!.offsetTop - menuStateOffsetY;
+    const experience = document.getElementById("experience-component")!.offsetTop - menuStateOffsetY;
 
     let newMenuItem = "";
 
@@ -133,8 +140,8 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  navigateHome(){
-    this.smoothScrollTo(0).then(() => {
+  async navigateHome(){
+    await this.smoothScrollTo(0).then(() => {
       this.router.navigate(['']);
     });
   }
@@ -146,32 +153,32 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  scrollToPosition(top: number) {
+  async scrollToPosition(top: number) {
     this.isMobileMenuVisible = false;
     this.isSmoothScrolling = true;
-    this.smoothScrollTo(top).then(() => {
+    await this.smoothScrollTo(top).then(() => {
       this.isSmoothScrolling = false;
       this.updateMenuState();
     });
   }
 
-  smoothScrollTo(top: number) {
-    return new Promise<void>((resolve) => {
-      window.scrollTo({
-        top: top,
-        behavior: 'smooth'
-      });
+  async smoothScrollTo(
+    top: number,
+    epsilon = 1
+  ): Promise<void> {
+    const el = this.scrollable.getElementRef().nativeElement;
   
-      const checkIfDone = () => {
-        // Check if the window has reached the desired scroll position
-        if (Math.abs(window.scrollY - top) < 1) {
-          resolve(); // Resolve when done
-        } else {
-          requestAnimationFrame(checkIfDone); // Keep checking until done
-        }
-      };
+    // Set up a one-time waiter that resolves when we’re ~at target
+    const done$ = this.scrollable.elementScrolled().pipe(
+      map(() => el.scrollTop),
+      startWith(el.scrollTop),                 // handles “already at target”
+      filter(curr => Math.abs(curr - top) <= epsilon),
+      take(1)
+    );
   
-      requestAnimationFrame(checkIfDone);
-    });
+    // Kick off smooth scroll AFTER wiring the listener
+    el.scrollTo({ top, behavior: 'smooth' });
+  
+    await firstValueFrom(done$);
   }
 }

@@ -1,15 +1,22 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [],
+  imports: [
+    MatButtonModule
+  ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent implements AfterViewInit, OnDestroy {
   @ViewChild('carouselContainer', { static: true }) containerRef!: ElementRef;
   
+  private startX = 0;
+  private startY = 0;
+  private isSwiping = false;
+  private axis: 'x' | 'y' | null = null;
   currentIndex = 0;
   isTransitioning = true;
   containerWidth = 0;
@@ -17,7 +24,8 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
 
   projects = [
     {
-      title: "Mesa — React virtual tabletop (MVP)",
+      title: "Mesa",
+      subtitle: "React virtual tabletop (MVP)",
       tagline: "React • Electron • MUI • react-draggable • react-zoom-pan-pinch",
       description: "A working MVP of a desktop virtual tabletop app for D&D. Built from scratch in React and Electron after outgrowing a forked vanilla JS project. Supports uploading and scaling background maps, dragging and snapping pieces to the grid, measuring distances with drawing tools, and zooming/panning around the gameboard.",
       bullets: [
@@ -30,11 +38,14 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
         "Background upload and scaling to fit grid layouts",
         "Inspired by earlier fork of 'Dungeoneer' but fully rebuilt in React for extensibility"
       ],
-      link: "https://github.com/dfausz/mesa/tree/main",
-      screenshots: []
+      link: "https://github.com/dfausz/mesa",
+      screenshots: [
+        "/assets/mesa.JPG"
+      ]
     },
     {
-      title: "MedMeter — med-dose timer",
+      title: "MedMeter",
+      subtitle: "med-dose timer",
       tagline: "Xamarin • SQLite • SkiaSharp • MVVM",
       description: "A minimalist, offline medication tracker. Save a med and its safe interval, log doses with one tap, and see an animated wheel that counts down until your next allowed dose. Capture a photo of each med for quick identification.",
       bullets: [
@@ -47,12 +58,13 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
       ],
       link: "https://github.com/dfausz/med-meter",
       screenshots: [
-        "medmeter.png",
-        "update.png"
+        "/assets/medmeter.png",
+        "/assets/update.png"
       ]
     },
     {
-      title: "Roll Reporter — online D&D roll tracker",
+      title: "Roll Reporter",
+      subtitle: "Online D&D roll tracker",
       tagline: "Angular • Firebase • Angular Material",
       description: "A lightweight Angular web app for tracking dice rolls during online D&D sessions. Designed to cut down on confusion when rolls are called out over voice but not clearly heard. Built for fast, mobile-friendly use with a custom on-screen number pad instead of a device keyboard.",
       bullets: [
@@ -64,10 +76,13 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
         "Used in live D&D sessions to streamline roll reporting"
       ],
       link: "https://github.com/dfausz/roll-reporter",
-      screenshots: []
+      screenshots: [
+        "/assets/rollreporter1.JPG"
+      ]
     },
     {
-      title: "Personal Portfolio Website",
+      title: "Resume",
+      subtitle: "Personal Portfolio Website",
       tagline: "Angular • Angular Material • Custom Animations",
       description: "A simple but polished portfolio site to showcase my work experience and projects. Built in Angular with Angular Material, featuring subtle animations and an interactive design that highlights my professional identity and links to my socials.",
       bullets: [
@@ -79,16 +94,21 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
         "Deployed as a lightweight, clean presentation of my work"
       ],
       link: "https://github.com/dfausz/resume",
-      screenshots: []
+      screenshots: [
+        "/assets/resume.JPG"
+      ]
     }
   ];
-  
-  
-  private touchStartX = 0;
-  private touchEndX = 0;
 
   ngAfterViewInit() {
     this.initializeResizeObserver();
+    const el = this.containerRef.nativeElement;
+
+    el.addEventListener('pointerdown', this.onDown, { passive: true });
+    el.addEventListener('pointermove', this.onMove,  { passive: true }); // no preventDefault needed because of touch-action
+    el.addEventListener('pointerup',   this.onUp);
+    el.addEventListener('pointercancel', this.onUp);
+    el.addEventListener('pointerleave', this.onUp);
   }
 
   ngOnDestroy() {
@@ -131,29 +151,48 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
     this.currentIndex = index;
   }
 
-  onTouchStart(event: TouchEvent) {
-    this.touchStartX = event.touches[0].clientX;
-    this.isTransitioning = false;
-  }
+  private onDown = (e: PointerEvent) => {
+    if (e.pointerType === 'touch') (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+    this.isSwiping = true;
+    this.axis = null;
+  };
 
-  onTouchMove(event: TouchEvent) {
-    // Prevent scrolling while swiping
-    event.preventDefault();
-  }
+  private onMove = (e: PointerEvent) => {
+    if (!this.isSwiping) return;
+    const dx = e.clientX - this.startX;
+    const dy = e.clientY - this.startY;
 
-  onTouchEnd(event: TouchEvent) {
-    this.touchEndX = event.changedTouches[0].clientX;
-    this.isTransitioning = true;
-    
-    const swipeThreshold = 50;
-    const diff = this.touchStartX - this.touchEndX;
-    
-    if (Math.abs(diff) > swipeThreshold) {
-      if (diff > 0) {
-        this.next(); // Swipe left - next slide
+    // Decide axis once, with a small threshold to avoid jitter
+    if (!this.axis) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return; // not enough movement yet
+      this.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+
+    if (this.axis === 'x') {
+      // Handle horizontal drag for carousel (e.g., translate track)
+      // this.updateTrack(dx);
+    } else {
+      // Vertical: do nothing; browser scrolls the page naturally
+      return;
+    }
+  };
+
+  private onUp = (e: PointerEvent) => {
+    if (!this.isSwiping) return;
+    const dx = e.clientX - this.startX;
+
+    if (this.axis === 'x') {
+      // Commit swipe if far enough
+      if (Math.abs(dx) > 60) {
+        dx < 0 ? this.next() : this.prev();
       } else {
-        this.prev(); // Swipe right - previous slide
+        // this.snapBack();
       }
     }
-  }
+
+    this.isSwiping = false;
+    this.axis = null;
+  };
 }
