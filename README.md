@@ -5,6 +5,8 @@ A simple yet polished portfolio site built with **Angular** and **Angular Materi
 
 The site emphasizes clarity, interactivity, and visual flow — presenting a developer’s identity in a lightweight, elegant package.
 
+<img width="1165" height="782" alt="image" src="https://github.com/user-attachments/assets/6be88e7a-2dee-4574-9837-73e611eb18e5" />
+
 ---
 
 ## 🧰 Tech Stack
